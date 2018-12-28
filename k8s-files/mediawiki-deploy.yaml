@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mediawiki
+  labels:
+    app: mediawiki
+spec:
+  selector:
+    matchLabels:
+      app: mediawiki
+  template:
+    metadata:
+      labels:
+        app: mediawiki
+    spec:
+      volumes:
+        - name: localsettings
+          configMap:
+            name: localsettings
+      containers:
+        - image: mdshoaib707/mediawiki-tg:minimized
+          name: mediawiki
+          ports:
+            - containerPort: 80
+              name: mediawiki-port
+          volumeMounts:
+            - name: localsettings
+              mountPath: "/var/lib/mediawiki/LocalSettings.php"
+              subPath: "LocalSettings.php"
