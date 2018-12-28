@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql-deploy
+  namespace: mysql-dev
   labels:
     tier: mysql
 spec:
@@ -13,9 +14,16 @@ spec:
       labels:
         tier: mysql
     spec:
+      volumes:
+        - name: mysql-vol
+          persistentVolumeClaim:
+            claimName: mysql-claim-dev
       containers:
         - name: mysql
           image: mysql:5.6
+          volumeMounts:
+            - name: mysql-vol
+              mountPath: "/var/lib/mysql"
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:

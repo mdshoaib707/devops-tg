@@ -23,7 +23,7 @@ spec:
           ports:
             - containerPort: 80
               name: mediawiki-port
-          volumeMounts:
-            - name: localsettings
-              mountPath: "/var/lib/mediawiki/LocalSettings.php"
-              subPath: "LocalSettings.php"
+              #          volumeMounts:
+              #- name: localsettings
+              #mountPath: "/var/lib/mediawiki/LocalSettings.php"
+              #subPath: "LocalSettings.php"
