@@ -1,0 +1,17 @@
+aws eks create-cluster --name eks-tg --role-arn arn:aws:iam::673424740908:role/eksServiceRole --resources-vpc-config subnetIds=subnet-0ee7c3e79b061f934,subnet-0e9b28bcbf6e0e980,subnet-05d88400e07270748,securityGroupIds=sg-0166b510e84f04964 --region us-east-1
+
+aws eks describe-cluster --name eks-tg --query cluster.status
+aws eks update-kubeconfig --name eks-tg --region us-east-1
+
+install aws-iam-authenticator and kubectl
+./aws eks update-kubeconfig --name eks-tg --region us-east-1
+
+
+
+openssl req \
+       -newkey rsa:2048 -nodes -keyout domain.key \
+       -x509 -days 365 -out domain.crt
+
+k create clusterrolebinding admin-binding-1 --clusterrole cluster-admin --user=system:serviceaccount:default:admin
+
+eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImFkbWluLXRva2VuLWdkZmNwIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiYjMwNGZmNjAtMGE5Yi0xMWU5LWJjOWEtMGUyZGFmNjFhNjc2Iiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmRlZmF1bHQ6YWRtaW4ifQ.CGjauUMZWHNjBwbQ94uDE87y7MvKQeP3LzNFZPo4fTY-3xVbVKYRnZ35rxbF3r1D7_jAEW_A5J4h0UrcHl5Cq2Xl0k9XspWpOvlr8ZJC-rny0xCgmN-W0wAolpbMGZBU_LrB7iejjrF9VmBqgB_nh-qaMe1rY-Rv92bYY4N-pStj0ZyBNcEkHSALy1I1QSwK67kpT6K-s0CKa5F8hICXebSrje6HXHjE3bKm8ZeOk99LUqHhOJEPJTh-nGBxXFuk3Yea_nTDg_gYjnXu7s6CZOdhVw5P0Rx131vAVt47Mo7dsaWx6-7aYiqZo3T2M60CpQoofFHrkeCiB_5wUxwUeQ
