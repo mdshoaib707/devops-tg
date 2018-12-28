@@ -18,6 +18,12 @@ service:
   type: NodePort
   port: 80
 
+Env: qa
+
+configMap:
+  enabled: true
+
+
 ingress:
   enabled: false
   annotations: {}
