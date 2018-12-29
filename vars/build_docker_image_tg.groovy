@@ -12,7 +12,7 @@ def call(def agent, def branch, def project) {
       docker rm \$(docker ps -aq) -f || true
       docker rmi \$(docker images -aq) -f || true
       """
-      app = docker.build("mdshoaib707/mediwiki-tg")
+      app = docker.build("mdshoaib707/mediawiki-tg")
     }
 
     stage ('Push Image') {
