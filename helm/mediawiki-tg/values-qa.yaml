@@ -21,7 +21,7 @@ service:
 Env: qa
 
 configMap:
-  enabled: false
+  enabled: true
 
 ingress:
   enabled: false
