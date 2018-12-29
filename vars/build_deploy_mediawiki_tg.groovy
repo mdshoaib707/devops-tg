@@ -36,16 +36,17 @@ def call(def agent, def branch, def project, def APPENV, def DEVOPSBRANCH, def A
     
     stage ('Deploy Mediawiki/MySQL app in k8s') {
       sh """
-      export KUBECONFIG=/home/ubuntu/.kube/config
+      export PATH=/var/lib/jenkins/.local/bin:$PATH
+      export KUBECONFIG=/var/lib/jenkins/kube-config
       echo $pwd
       cd ${WORKSPACE}/helm/${APPPROJECT}
       
       DEPLOYED=\$(sudo -u ubuntu helm list | grep -E mediawiki-${APPENV} | grep DEPLOYED | wc -l)  
       if [ \${DEPLOYED} = 0 ]; then
-          sudo -u ubuntu helm install --name mediawiki-${APPENV} -f values-${APPENV} mediawiki-${APPENV}
+          helm install --name mediawiki-${APPENV} -f values-${APPENV} mediawiki-${APPENV}
           echo Deployed!!!
       else
-          sudo -u ubuntu helm upgrade -f values-${APPENV} mediawiki-${APPENV} mediawiki-${APPENV}
+          helm upgrade -f values-${APPENV} mediawiki-${APPENV} mediawiki-${APPENV}
           echo Deployed!!!
       fi
       
