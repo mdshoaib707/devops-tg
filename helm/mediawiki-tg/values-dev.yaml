@@ -21,7 +21,7 @@ service:
 Env: dev
 
 configMap:
-  enabled: true
+  enabled: false
 
 
 ingress:
