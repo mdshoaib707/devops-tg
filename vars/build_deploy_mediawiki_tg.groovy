@@ -38,10 +38,12 @@ def call(def agent, def branch, def project, def APPENV, def DEVOPSBRANCH, def A
       sh """
       export PATH=/var/lib/jenkins/.local/bin:$PATH
       export KUBECONFIG=/var/lib/jenkins/kube-config
-      echo $pwd
-      cd ${WORKSPACE}/helm/${APPPROJECT}
       
-      DEPLOYED=\$(sudo -u ubuntu helm list | grep -E mediawiki-${APPENV} | grep DEPLOYED | wc -l)  
+      cd ${WORKSPACE}/helm/${APPPROJECT}
+      echo $pwd
+      ls
+      
+      DEPLOYED=\$(helm list | grep -E mediawiki-${APPENV} | grep DEPLOYED | wc -l)  
       if [ \${DEPLOYED} = 0 ]; then
           helm install --name mediawiki-${APPENV} -f values-${APPENV} mediawiki-${APPENV}
           echo Deployed!!!
