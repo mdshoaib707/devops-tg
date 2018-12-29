@@ -40,26 +40,15 @@ def call(def agent, def branch, def project, def APPENV, def DEVOPSBRANCH, def A
       echo $pwd
       cd ${WORKSPACE}/helm/${APPPROJECT}
       
-      if [ \${APPPROJECT} = "mediawiki.*" ]; then
-        DEPLOYED=\$(helm list | grep -E mediawiki-${APPENV} | grep DEPLOYED | wc -l)  
-        if [ \${DEPLOYED} = 0 ]; then
+      DEPLOYED=\$(helm list | grep -E mediawiki-${APPENV} | grep DEPLOYED | wc -l)  
+      if [ \${DEPLOYED} = 0 ]; then
           helm install --name mediawiki-${APPENV} -f values-${APPENV} mediawiki-${APPENV}
           echo Deployed!!!
-        else
+      else
           helm upgrade -f values-${APPENV} mediawiki-${APPENV} mediawiki-${APPENV}
           echo Deployed!!!
-        fi
-      elif [ \${APPPROJECT} = "mysql.*" ]; then
-        DEPLOYED=\$(helm list | grep -E mysql-${APPENV} | grep DEPLOYED | wc -l)  
-        if [ \${DEPLOYED} = 0 ]; then
-          helm install --name mysql-${APPENV} -f values-${APPENV} mysql-${APPENV}
-          echo Deployed!!!
-        else
-          helm upgrade -f values-${APPENV} mysql-${APPENV} mysql-${APPENV}
-          echo Deployed!!!
-        fi
       fi
-     
+      
       """
       
     }
