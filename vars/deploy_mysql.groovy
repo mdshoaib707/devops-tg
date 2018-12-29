@@ -5,23 +5,26 @@ def call(def agent, def branch, def project, def APPENV, def DEVOPSBRANCH, def A
        checkout([$class: 'GitSCM', branches: [[name: DEVOPSBRANCH]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/mdshoaib707/devops-tg.git']]])
     }
     
-    stage ('Deploy Mediawiki/MySQL app in k8s') {
+    stage ('Deploy MySQL in k8s') {
       sh """
-      export KUBECONFIG=/home/ubuntu/.kube/config
-      echo $pwd
-      cd ${WORKSPACE}/helm/${APPPROJECT}
+      export PATH=/var/lib/jenkins/.local/bin:$PATH
+      export KUBECONFIG=/var/lib/jenkins/kube-config
       
-        elif [ \${APPPROJECT} = "mysql.*" ]; then
-        DEPLOYED=\$(helm list | grep -E mysql-${APPENV} | grep DEPLOYED | wc -l)  
-        if [ \${DEPLOYED} = 0 ]; then
-          helm install --name mysql-${APPENV} -f values-${APPENV} mysql-${APPENV}
+      cd ${WORKSPACE}/helm/${APPPROJECT}
+      echo $pwd
+      ls
+           
+      DEPLOYED=\$(helm list | grep -E mysql-${APPENV} | grep DEPLOYED | wc -l)  
+      if [ \${DEPLOYED} = 0 ]; then
+          helm install -f values-${APPENV}.yaml --name mysql-${APPENV} .
           echo Deployed!!!
-        else
-          helm upgrade -f values-${APPENV} mysql-${APPENV} mysql-${APPENV}
+      else
+          helm upgrade -f values-${APPENV}.yaml mysql-${APPENV} .
           echo Deployed!!!
-        fi
       fi
+      
       """
+      
     }
   }
 }
