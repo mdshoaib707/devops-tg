@@ -1,14 +1,13 @@
-def call(def agent, def branch, def project, def imagerepo) {
+def call(def agent, def branch, def project) {
   node(agent) {
     stage ('Checkout code') {
       cleanWs()
-      checkout([$class: 'GitSCM', branches: [[name: branch]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '122-23', url: 'git@github.com:mdshoaib707/code-tw.git']]])
+      checkout([$class: 'GitSCM', branches: [[name: branch]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/mdshoaib707/code-tw.git']]])
     }
 
     stage ('Docker Image Build') {
       sh """
-      cd code-tw/
-      cp -rv ${project}/Dockerfile .
+      cd ${project}
       docker rm \$(docker ps -aq) -f || true
       docker rmi \$(docker images -aq) -f || true
       docker build -t jenkins:latest .
