@@ -34,21 +34,32 @@ def call(def agent, def branch, def project, def APPENV, def DEVOPSBRANCH, def A
        checkout([$class: 'GitSCM', branches: [[name: DEVOPSBRANCH]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/mdshoaib707/devops-tg.git']]])
     }
     
-    stage ('Deploy Mediawiki app in k8s') {
+    stage ('Deploy Mediawiki/MySQL app in k8s') {
       sh """
       export KUBECONFIG=/home/ubuntu/.kube/config
       echo $pwd
-      cd ${WORKSPACE}/helm/${APPPROJECT}
-      DEPLOYED=\$(helm list | grep -E ${APPPROJECT} | grep DEPLOYED | wc -l)
+      cd ${WORKSPACE}/${APPPROJECT}
       
-      if [ \${DEPLOYED} = 0 ]; then
-        helm install --name ${APPPROJECT} -f values-${APPENV} ${APPPROJECT}
-        echo Deployed!!!
-      else
-        helm upgrade -f values-${APPENV} ${APPPROJECT} ${APPPROJECT}
-        echo Deployed!!!
+      if [ \${APPPROJECT} = "mediawiki.*" ]; then
+        DEPLOYED=\$(helm list | grep -E mediawiki-${APPENV} | grep DEPLOYED | wc -l)  
+        if [ \${DEPLOYED} = 0 ]; then
+          helm install --name mediawiki-${APPENV} -f values-${APPENV} mediawiki-${APPENV}
+          echo Deployed!!!
+        else
+          helm upgrade -f values-${APPENV} mediawiki-${APPENV} mediawiki-${APPENV}
+          echo Deployed!!!
+        fi
+      elif [ \${APPPROJECT} = "mysql.*" ]; then
+        DEPLOYED=\$(helm list | grep -E mysql-${APPENV} | grep DEPLOYED | wc -l)  
+        if [ \${DEPLOYED} = 0 ]; then
+          helm install --name mysql-${APPENV} -f values-${APPENV} mysql-${APPENV}
+          echo Deployed!!!
+        else
+          helm upgrade -f values-${APPENV} mysql-${APPENV} mysql-${APPENV}
+          echo Deployed!!!
+        fi
       fi
-      
+     
       """
       
     }
