@@ -8,6 +8,9 @@ def call(def agent, def branch, def project) {
     stage ('Build Image') {
       sh """
       cd ${WORKSPACE}
+      echo "Cleaning up old docker images"
+      docker rm \$(docker ps -aq) -f || true
+      docker rmi \$(docker images -aq) -f || true
       """
       app = docker.build("mdshoaib707/mediwiki-tg")
     }
@@ -17,7 +20,13 @@ def call(def agent, def branch, def project) {
         app.push("${env.BUILD_NUMBER}")
         app.push("latest")
       }
-      
+    }
+    
+    stage ('Delete images locally') {
+      sh """
+      docker rm \$(docker ps -aq) -f || true
+      docker rmi \$(docker images -aq) -f || true
+      """
     }
   }
 }
