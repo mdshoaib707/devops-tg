@@ -38,7 +38,7 @@ def call(def agent, def branch, def project, def APPENV, def DEVOPSBRANCH, def A
       sh """
       export KUBECONFIG=/home/ubuntu/.kube/config
       echo $pwd
-      cd ${WORKSPACE}/${APPPROJECT}
+      cd ${WORKSPACE}/helm/${APPPROJECT}
       
       if [ \${APPPROJECT} = "mediawiki.*" ]; then
         DEPLOYED=\$(helm list | grep -E mediawiki-${APPENV} | grep DEPLOYED | wc -l)  
