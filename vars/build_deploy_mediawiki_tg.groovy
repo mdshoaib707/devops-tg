@@ -45,10 +45,10 @@ def call(def agent, def branch, def project, def APPENV, def DEVOPSBRANCH, def A
       
       DEPLOYED=\$(helm list | grep -E mediawiki-${APPENV} | grep DEPLOYED | wc -l)  
       if [ \${DEPLOYED} = 0 ]; then
-          helm install --name mediawiki-${APPENV} -f values-${APPENV}.yaml mediawiki-${APPENV}
+          helm install -f values-${APPENV}.yaml --name mediawiki-${APPENV} .
           echo Deployed!!!
       else
-          helm upgrade -f values-${APPENV}.yaml mediawiki-${APPENV} mediawiki-${APPENV}
+          helm upgrade -f values-${APPENV}.yaml mediawiki-${APPENV} .
           echo Deployed!!!
       fi
       
