@@ -38,7 +38,7 @@ data:
       $wgScriptPath = "/mediawiki";
 
       ## The protocol and server name to use in fully-qualified URLs
-      $wgServer = "http://34.228.18.58:30941";
+      $wgServer = "http://52.91.37.98:31376";
 
       ## The URL path to static resources (images, scripts, etc.)
       $wgResourceBasePath = $wgScriptPath;
@@ -52,8 +52,8 @@ data:
       $wgEnableEmail = true;
       $wgEnableUserEmail = true; # UPO
 
-      $wgEmergencyContact = "apache@34.228.18.58";
-      $wgPasswordSender = "apache@34.228.18.58";
+      $wgEmergencyContact = "apache@52.91.37.98";
+      $wgPasswordSender = "apache@52.91.37.98";
 
       $wgEnotifUserTalk = false; # UPO
       $wgEnotifWatchlist = false; # UPO
@@ -61,7 +61,7 @@ data:
 
       ## Database settings
       $wgDBtype = "mysql";
-      $wgDBserver = "mysql-dev.mysql-dev";
+      $wgDBserver = "mysql-dev.mysql-dev.svc.cluster.local";
       $wgDBname = "my_wiki";
       $wgDBuser = "new_mysql_user";
       $wgDBpassword = "test";
@@ -103,14 +103,14 @@ data:
       # Site language code, should be one of the list in ./languages/data/Names.php
       $wgLanguageCode = "en";
 
-      $wgSecretKey = "05d46dd2e81b33fbf84f0f5a1b04cf5312a62f5b20c3d57639a52c8377a10894";
+      $wgSecretKey = "fe0be4b0142f4fd53ae99b583dbe70bcb22b62976bfc0d8d785844f53e16bb1c";
 
       # Changing this will log out all existing sessions.
       $wgAuthenticationTokenVersion = "1";
 
       # Site upgrade key. Must be set to a string (default provided) to turn on the
       # web installer while LocalSettings.php is in place
-      $wgUpgradeKey = "078999d1d12ab28e";
+      $wgUpgradeKey = "0c4a48235a5e5ae1";
 
       ## For attaching licensing metadata to pages, and displaying an
       ## appropriate copyright notice / icon. GNU Free Documentation
@@ -136,6 +136,7 @@ data:
 
       # End of automatically generated settings.
       # Add more configuration options below.
+
 
 
 {{- end }}
