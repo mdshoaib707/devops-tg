@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: mdshoaib707/mediawiki-tg
-  tag: minimized
+  tag: latest
   pullPolicy: Always
 
 namespace: mediawiki-dev
