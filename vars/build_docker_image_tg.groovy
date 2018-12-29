@@ -7,8 +7,8 @@ def call(def agent, def branch, def project) {
 
     stage ('Docker Image Build') {
       sh """
+      cd ${WORKSPACE}
       echo $pwd
-      cd ${project}
       docker rm \$(docker ps -aq) -f || true
       docker rmi \$(docker images -aq) -f || true
       docker build -t jenkins:latest .
