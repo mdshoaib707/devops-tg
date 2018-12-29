@@ -43,6 +43,8 @@ def call(def agent, def branch, def project, def APPENV, def DEVOPSBRANCH, def A
       echo $pwd
       ls
       
+      sed -i "s/latest/${BUILD_NUMBER}/" values-${APPENV}.yaml
+      
       DEPLOYED=\$(helm list | grep -E mediawiki-${APPENV} | grep DEPLOYED | wc -l)  
       if [ \${DEPLOYED} = 0 ]; then
           helm install -f values-${APPENV}.yaml --name mediawiki-${APPENV} .
